@@ -18,8 +18,10 @@ from django.urls import path
 from django.conf.urls import include
 from . import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
     path('dashboard/', include('DashBoard.urls')),
+    path('login', views.loginUser ),
 ]
