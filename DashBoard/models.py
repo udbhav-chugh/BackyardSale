@@ -43,4 +43,7 @@ class Item(models.Model):
     RenterInfo = models.ForeignKey(to=User, default=None, on_delete=models.SET_NULL, related_name="Consumer", null=True)
     Description = models.CharField(max_length=1000)
 
+    def __str__(self):
+        return self.ProductModel
+
 

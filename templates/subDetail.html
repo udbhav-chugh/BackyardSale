@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+    {# Show all the categories here! #}
+    {% for item in Items %}
+        <ul>{{ item }}</ul>
+    {% endfor %}
+
+{% endblock %}

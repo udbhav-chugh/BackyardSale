@@ -5,9 +5,9 @@
     {# Show all the categories here! #}
     {% for category in Categories %}
         <h1>{{ category }}</h1>
-        {% for foo in SubCategories %}
-            {% if foo.ParentCategory == category %}
-                <ul> {{ foo }} </ul>
+        {% for subCat in SubCategories %}
+            {% if subCat.ParentCategory == category %}
+                <a href="{{ subCat }}/"> {{ subCat }} </a>
             {% endif %}
         {% endfor %}
     {% endfor %}

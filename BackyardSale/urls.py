@@ -24,4 +24,5 @@ urlpatterns = [
     path('', views.homeView.as_view()),
     path('dashboard/', include('DashBoard.urls')),
     path('login/', views.loginUser, name='login' ),
+    path('<slug:slug>/', views.subCategoryView.as_view()),
 ]
