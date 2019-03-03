@@ -17,7 +17,7 @@ class dashboard(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(dashboard, self).get_context_data(**kwargs)
-        context['Items'] = Item.objects.filter(Seller__username=self.request.user)
+        context['Items'] = Item.objects.filter(Seller=self.request.user)
 
         return context
 

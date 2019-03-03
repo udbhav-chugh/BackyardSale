@@ -10,6 +10,9 @@ class NewUser(models.Model):
     PhoneNum= models.CharField(max_length=100)
     Address=models.CharField(max_length=500)
 
+    def __str__(self):
+        return self.user.username
+
 
 class Category(models.Model):
     Name = models.CharField(max_length=250)
