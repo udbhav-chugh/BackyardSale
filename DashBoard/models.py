@@ -25,6 +25,7 @@ class SubCategory(models.Model):
         return self.Name
 
 
+# Current Status
 # 0) Item available for Sale
 # 1) Item available for Rent
 # 2) Item Currently Rented
