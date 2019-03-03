@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.views import generic
 from .models import NewUser,Item
+
 # Create your views here.
 
 
@@ -20,4 +21,5 @@ class dashboard(generic.DetailView):
         context['Items'] = Item.objects.filter(Seller=self.request.user)
 
         return context
+
 

@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views import generic
 from DashBoard.models import Category, SubCategory, Item
+from . import forms
 from django.http import HttpResponse
 
 class homeView(generic.ListView):
@@ -52,3 +53,28 @@ def loginUser(request):
 def logoutUser(request):
     logout(request)
     return  redirect(to="/")
+
+
+
+def register(request):
+    userForm = forms.UserForm(request.POST or None)
+    userInfoForm = forms.UserInfoForm(request.POST or None)
+    if userForm.is_valid() and userInfoForm.is_valid():
+        user=userForm.save(commit=False)
+        userInfo=userInfoForm.save(commit=False)
+        username = userForm.cleaned_data['username']
+        password = userForm.cleaned_data['password']
+        user.set_password(password)
+        user.save()
+        userInfo.user=user
+        userInfo.save()
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect(to='/')
+
+    context={
+        'userForm' : userForm,
+        'userInfoForm': userInfoForm,
+    }
+    return render(request,'registration/register.html',context)
