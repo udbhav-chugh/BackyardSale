@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views import generic
@@ -37,7 +37,7 @@ def loginUser(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect(to=request.GET.get('next'))
+                return redirect(to=request.GET.get('next','/'))
             else:
                 return render(request, 'registration/login.html', {'error_message': 'Your account has been disabled'})
         else:
@@ -46,4 +46,5 @@ def loginUser(request):
         return render(request,'registration/login.html')
 
 def logoutUser(request):
-    pass
+    logout(request)
+    return render(request,'/')

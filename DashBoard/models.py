@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class NewUser(models.Model):
     user=models.OneToOneField(to=User,on_delete=models.CASCADE,primary_key=True)
     PhoneNum= models.CharField(max_length=100)
+    Address=models.CharField(max_length=500)
 
 
 class Category(models.Model):
