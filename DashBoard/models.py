@@ -43,11 +43,11 @@ class Item(models.Model):
     ProductModel = models.CharField(max_length=250)
     ProductImage = models.ImageField()
     ProductPrice = models.DecimalField(decimal_places=2, max_digits=12)
-    Negotiable = models.BooleanField(default=True)
+    Negotiable = models.BooleanField(default=False)
     Seller = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="Seller")
     CurrentStatus = models.IntegerField()
-    RenterInfo = models.ForeignKey(to=User, default=None, on_delete=models.SET_NULL, related_name="Consumer", null=True)
-    Description = models.CharField(max_length=1000)
+    RenterInfo = models.ForeignKey(to=User, default=None, on_delete=models.SET_NULL, related_name="Consumer", null=True, blank=True)
+    Description = models.CharField(max_length=1000, default= None,blank=True)
     slug = models.SlugField()
 
     def __str__(self):
