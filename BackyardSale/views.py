@@ -51,4 +51,4 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    return render(request,'/')
+    return  redirect(to="/")

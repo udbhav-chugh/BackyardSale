@@ -1,8 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-
+from django.views import generic
+from .models import NewUser,Item
 # Create your views here.
 
 
-def home(request):
-    return HttpResponse("<h1>home</h1>")
+class dashboard(generic.DetailView):
+    model = NewUser
+    context_object_name = 'CurrentUser'
+    template_name = 'DashBoard/dashboard.html'
+    slug_field = 'user'
+
+    def get_object(self, queryset=None):
+        obj = get_object_or_404(self.model, user=self.request.user)
+        return obj
+
+    def get_context_data(self, **kwargs):
+        context = super(dashboard, self).get_context_data(**kwargs)
+        context['Items'] = Item.objects.filter(Seller__username=self.request.user)
+
+        return context
+

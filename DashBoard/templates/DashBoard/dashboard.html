@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+    {# Show all the categories here! #}
+    <h1>{{ CurrentUser.user }}</h1>
+    {% for item in Items %}
+        <div>
+            <div>
+                <h3>{{ item.ProductModel }}</h3>
+            </div>
+            <div>
+                <!-- Add Link to Details Here -->
+                <a href="#">
+                    <img src="{{ item.ProductImage.url }}">
+                </a>
+                <div>
+                    <h3>
+                        Price: {{ item.ProductPrice }}
+                    </h3>
+                    <h4>
+                        {% if item.CurrentStatus == 1  %}
+                            Item for Sale
+                        {% elif item.CurrentStatus == 2 %}
+                            Item for Rent
+                        {% endif %}
+                    </h4>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

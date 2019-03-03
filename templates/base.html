@@ -1,5 +1,13 @@
 {% block body %}
 {% endblock %}
 
-<a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+{% if user.is_authenticated == True and user.is_active == True%}
+    <br>
+    <a href="{% url 'logout' %}">Logout</a>
+    <br>
+    <a href="{% url 'dashboard' %}">My Dashboard</a>
+{%  else %}
+    <br>
+    <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+{% endif %}
 
