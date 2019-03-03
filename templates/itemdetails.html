@@ -1,0 +1,25 @@
+{% block body %}
+    {# I have access to item now #}
+    <h1>
+        {{ Item.ProductModel }}
+    </h1>
+    <img src="{{ Item.ProductImage.url }}" >
+    <div>
+                    <p>
+                        {{ Item.Description }}
+                    </p>
+                    <h3>
+                        Price: {{ Item.ProductPrice }}
+                    </h3>
+                    <h4>
+                        {% if item.CurrentStatus == 1  %}
+                            Item for Sale
+                        {% elif item.CurrentStatus == 2 %}
+                            Item for Rent
+                        {% endif %}
+                    </h4>
+                    {{ Item.Seller.username }}
+    </div>
+
+
+{% endblock %}

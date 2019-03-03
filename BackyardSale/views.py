@@ -28,6 +28,10 @@ class subCategoryView(generic.DetailView):
         context['Items'] = Item.objects.filter(SubCategory__Name=self.kwargs['slug'])
         return context
 
+class ItemView(generic.DetailView):
+    model = Item
+    context_object_name = 'Item'
+    template_name = 'itemdetails.html'
 
 def loginUser(request):
     if request.method == "POST":

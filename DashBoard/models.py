@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -44,8 +45,13 @@ class Item(models.Model):
     CurrentStatus = models.IntegerField()
     RenterInfo = models.ForeignKey(to=User, default=None, on_delete=models.SET_NULL, related_name="Consumer", null=True)
     Description = models.CharField(max_length=1000)
+    slug = models.SlugField()
 
     def __str__(self):
         return self.ProductModel
+
+    def save(self,*args,**kwargs):
+        self.slug = slugify(self.ProductModel)
+        super(Item,self).save(*args,**kwargs)
 
 

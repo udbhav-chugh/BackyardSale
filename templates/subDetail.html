@@ -11,7 +11,7 @@
             </div>
             <div>
                 <!-- Add Link to Details Here -->
-                <a href="#">
+                <a href="{% url 'itemDetail' item.slug item.id %}">
                     <img src="{{ item.ProductImage.url }}">
                 </a>
                 <div>
