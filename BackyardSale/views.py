@@ -1,13 +1,20 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
-from django.contrib.auth import logout
+from django.shortcuts import render
+from django.views import generic
+from DashBoard.models import Category, SubCategory
 
+class homeView(generic.ListView):
+    template_name = 'home.html'
+    context_object_name = 'Categories'
 
+    def get_context_data(self, **kwargs):
+        context = super(homeView, self).get_context_data(**kwargs)
+        context['SubCategories'] = SubCategory.objects.all()
+        return context
 
-def home(request):
-    return render(request,'home.html')
+    def get_queryset(self):
+        return Category.objects.all()
 
 
 def loginUser(request):

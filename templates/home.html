@@ -2,7 +2,14 @@
 
 
 {% block body %}
-    <h1>
-    Backyard Sale: Coming SOON!!
-    </h1>
+    {# Show all the categories here! #}
+    {% for category in Categories %}
+        <h1>{{ category }}</h1>
+        {% for foo in SubCategories %}
+            {% if foo.ParentCategory == category %}
+                <ul> {{ foo }} </ul>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
 {% endblock %}
