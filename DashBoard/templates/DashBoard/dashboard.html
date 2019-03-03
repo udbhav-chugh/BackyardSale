@@ -4,6 +4,8 @@
 {% block body %}
     {# Show all the categories here! #}
     <h1>{{ CurrentUser.user }}</h1>
+    <h3>Address: {{ CurrentUser.Address }}</h3>
+    <h3>Contact Info: {{ CurrentUser.PhoneNum }}</h3>
     {% for item in Items %}
         <div>
             <div>
