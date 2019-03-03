@@ -21,8 +21,8 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.homeView.as_view()),
-    path('dashboard/', include('DashBoard.urls')),
+    path('', views.homeView.as_view(), name='home'),
+    path('dashboard/', include('DashBoard.urls'), name='dashboard'),
     path('login/', views.loginUser, name='login' ),
-    path('<slug:slug>/', views.subCategoryView.as_view()),
+    path('<slug:slug>/', views.subCategoryView.as_view(), name='subCatdetail'),
 ]

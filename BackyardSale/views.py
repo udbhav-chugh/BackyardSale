@@ -21,7 +21,6 @@ class subCategoryView(generic.DetailView):
     model = SubCategory
     context_object_name = 'SubCat'
     template_name = 'subDetail.html'
-    slug_url_kwarg = 'slug'
     slug_field = 'Name'
 
     def get_context_data(self, **kwargs):
