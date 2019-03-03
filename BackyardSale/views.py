@@ -19,8 +19,11 @@ def loginUser(request):
                 login(request, user)
                 return HttpResponse("Hello " + user.username)
             else:
-                return render(request, 'DashBoard/login.html', {'error_message': 'Your account has been disabled'})
+                return render(request, 'BackyardSale/login.html', {'error_message': 'Your account has been disabled'})
         else:
-            return render(request,'DashBoard/login.html', {'error_message':"Invalid Username Password"})
+            return render(request,'BackyardSale/login.html', {'error_message':"Invalid Username Password"})
     else:
-        return render(request,'DashBoard/login.html')
+        return render(request,'BackyardSale/login.html')
+
+def logoutUser(request):
+    pass
