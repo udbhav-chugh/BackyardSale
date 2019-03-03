@@ -10,3 +10,4 @@ To do list:
 3)OTP feature
 4)Google Maps
 5) Temperorary events like manthan renting(free)
+6)Chat between buyer and seller
