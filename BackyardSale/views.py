@@ -3,15 +3,15 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views import generic
 from DashBoard.models import Category, SubCategory, Item
-from django.http import HttpResponse
+
 
 class homeView(generic.ListView):
     template_name = 'home.html'
     context_object_name = 'Categories'
 
     def get_context_data(self, **kwargs):
-        context = super(homeView, self).get_context_data(**kwargs)
-        context['SubCategories'] = SubCategory.objects.all()
+        context = super(homeView, self).get_context_data(**kwargs) # Calling Base Class to get the original context data #
+        context['SubCategories'] = SubCategory.objects.all() # Adding SubCategories to the context #
         return context
 
     def get_queryset(self):
@@ -24,8 +24,8 @@ class subCategoryView(generic.DetailView):
     slug_field = 'Name'
 
     def get_context_data(self, **kwargs):
-        context = super(subCategoryView, self).get_context_data(**kwargs)
-        context['Items'] = Item.objects.filter(SubCategory__Name=self.kwargs['slug'])
+        context = super(subCategoryView, self).get_context_data(**kwargs) # Calling the Base method to get the original context data #
+        context['Items'] = Item.objects.filter(SubCategory=self.object) # Adding Items to the context #
         return context
 
 class ItemView(generic.DetailView):

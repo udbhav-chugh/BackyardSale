@@ -9,7 +9,7 @@ class dashboard(generic.DetailView):
     model = NewUser
     context_object_name = 'CurrentUser'
     template_name = 'DashBoard/dashboard.html'
-    slug_field = 'user'
+    # Slug Field no longer needed, so Removed #
 
     def get_object(self, queryset=None):
         obj = get_object_or_404(self.model, user=self.request.user)
