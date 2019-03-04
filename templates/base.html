@@ -9,6 +9,8 @@
 {%  else %}
     <br>
     <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+    <br>
+    <a href="{% url 'register' %}">Register</a>
 {% endif %}
 
 <br>
