@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{## Current Status #}
+{## 0) Item available for Sale #}
+{## 1) Item available for Rent #}
+{## 2) Item Currently Rented #}
+{## 3) Item Sold #}
 
 {% block body %}
     {# Show all the categories here! #}
@@ -13,7 +18,7 @@
             </div>
             <div>
                 <!-- Add Link to Details Here -->
-                <a href="#">
+                <a href="{% url 'itemDetail' item.slug item.id %}">
                     <img src="{{ item.ProductImage.url }}">
                 </a>
                 <div>
@@ -21,9 +26,9 @@
                         Price: {{ item.ProductPrice }}
                     </h3>
                     <h4>
-                        {% if item.CurrentStatus == 1  %}
+                        {% if item.CurrentStatus == 0  %}
                             Item for Sale
-                        {% elif item.CurrentStatus == 2 %}
+                        {% elif item.CurrentStatus == 1 %}
                             Item for Rent
                         {% endif %}
                     </h4>
@@ -31,5 +36,7 @@
             </div>
         </div>
     {% endfor %}
+
+    <a href="{% url 'Dashboard:create' %}">Create A New Item</a>
 
 {% endblock %}

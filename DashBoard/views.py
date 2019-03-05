@@ -1,9 +1,12 @@
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views import generic
 from .models import NewUser,Item
+from .forms import ItemForm
 
 # Create your views here.
+
 
 
 class dashboard(generic.DetailView):
@@ -21,5 +24,22 @@ class dashboard(generic.DetailView):
         context['Items'] = Item.objects.filter(Seller=self.request.user)
 
         return context
+
+
+class createItem(generic.CreateView):
+    model = Item
+    form_class = ItemForm
+    template_name = 'DashBoard/createItem.html'
+    success_url = reverse_lazy('Dashboard:dashboard')
+
+    def form_valid(self, form):
+        form.getCurrStatus()
+        form.getSeller()
+        return super(createItem, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kw = super(createItem, self).get_form_kwargs()
+        kw['request'] = self.request  # the trick!
+        return kw
 
 

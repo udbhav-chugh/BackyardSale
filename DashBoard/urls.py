@@ -16,8 +16,11 @@ Including another URLconf
 from django.urls import path
 from . import views
 
+app_name = 'Dashboard'
+
 urlpatterns = [
     path('', views.dashboard.as_view(), name='dashboard'),
+    path('create/',views.createItem.as_view(), name='create')
 ]
 
 
