@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views import generic
 from .models import NewUser,Item, SubCategory
-from .forms import ItemForm, UpdateForm
+from .forms import ItemForm
 from django.shortcuts import render
 
 # Create your views here.
@@ -63,7 +63,7 @@ class deleteItems(generic.DeleteView):
 
 class updateItems(generic.UpdateView):
     model = Item
-    form_class = UpdateForm
+    form_class = ItemForm
     template_name = 'DashBoard/updateItem.html'
     success_url = reverse_lazy('Dashboard:dashboard')
 
