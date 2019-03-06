@@ -49,5 +49,9 @@ class createItem(generic.CreateView):
 
 def getSubCategories(request):
     cat_id = request.GET.get('Category')
-    SubCategories = SubCategory.objects.filter(ParentCategory_id=cat_id)
+    if (cat_id == ""):
+        SubCategories = SubCategory.objects.none()
+    else:
+        SubCategories = SubCategory.objects.filter(ParentCategory_id=cat_id)
+
     return render(request,'DashBoard/categoryDropdown.html',{"SubCategories":SubCategories})
