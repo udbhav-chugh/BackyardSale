@@ -29,7 +29,8 @@ urlpatterns = [
     path('logout/',views.logoutUser,name='logout'),
     path('register/',views.register,name='register'),
     path("items/<slug:slug>/<int:pk>", views.ItemView.as_view(), name='itemDetail'),
-    path('<slug:slug>/', views.subCategoryView.as_view(), name='subCatdetail'),
+    path('Subcategories/<slug:slug>/', views.subCategoryView.as_view(), name='subCatdetail'),
+    path('Categories/<slug:slug>/', views.CategoryView.as_view(), name='catDetail'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

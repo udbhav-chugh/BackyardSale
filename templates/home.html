@@ -5,10 +5,10 @@
     {# Show all the categories here! #}
     <div align="center">
         {% for category in Categories %}
-            <h1>{{ category }}</h1>
+            <a href="{% url 'catDetail' category.slug %}"><h1>{{ category }}</h1></a>
             {% for subCat in SubCategories %}
                 {% if subCat.ParentCategory == category %}
-                    <a href="{{ subCat.slug }}/"> {{ subCat }} </a>
+                    <a href="{% url 'subCatdetail' subCat.slug %}"> {{ subCat }} </a>
                     <br>
                 {% endif %}
             {% endfor %}

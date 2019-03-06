@@ -22,12 +22,24 @@ class homeView(generic.ListView):
 class subCategoryView(generic.DetailView):
     model = SubCategory
     context_object_name = 'SubCat'
-    template_name = 'subDetail.html'
+    template_name = 'viewItems.html'
 
     def get_context_data(self, **kwargs):
         context = super(subCategoryView, self).get_context_data(**kwargs) # Calling the Base method to get the original context data #
         context['Items'] = Item.objects.filter(SubCategory=self.object) # Adding Items to the context #
         return context
+
+
+class CategoryView(generic.DetailView):
+    model = Category
+    context_object_name = 'Category'
+    template_name = 'viewItems.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryView, self).get_context_data(**kwargs) # Calling the Base method to get the original context data #
+        context['Items'] = Item.objects.filter(Category=self.object)  # Adding Items to the context #
+        return context
+
 
 class ItemView(generic.DetailView):
     model = Item
