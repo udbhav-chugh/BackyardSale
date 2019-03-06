@@ -16,17 +16,26 @@ class NewUser(models.Model):
 
 class Category(models.Model):
     Name = models.CharField(max_length=250)
+    slug = models.SlugField()
 
     def __str__(self):
         return self.Name
 
+    def save(self,*args,**kwargs):
+        self.slug = slugify(self.Name)
+        super(Category,self).save(*args,**kwargs)
 
 class SubCategory(models.Model):
     Name = models.CharField(max_length=250)
     ParentCategory = models.ForeignKey(to=Category, on_delete=models.CASCADE)
+    slug = models.SlugField()
 
     def __str__(self):
         return self.Name
+
+    def save(self,*args,**kwargs):
+        self.slug = slugify(self.Name)
+        super(SubCategory,self).save(*args,**kwargs)
 
 
 # Current Status

@@ -23,7 +23,6 @@ class subCategoryView(generic.DetailView):
     model = SubCategory
     context_object_name = 'SubCat'
     template_name = 'subDetail.html'
-    slug_field = 'Name'
 
     def get_context_data(self, **kwargs):
         context = super(subCategoryView, self).get_context_data(**kwargs) # Calling the Base method to get the original context data #

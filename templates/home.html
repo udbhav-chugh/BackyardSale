@@ -8,7 +8,7 @@
             <h1>{{ category }}</h1>
             {% for subCat in SubCategories %}
                 {% if subCat.ParentCategory == category %}
-                    <a href="{{ subCat }}/"> {{ subCat }} </a>
+                    <a href="{{ subCat.slug }}/"> {{ subCat }} </a>
                     <br>
                 {% endif %}
             {% endfor %}
