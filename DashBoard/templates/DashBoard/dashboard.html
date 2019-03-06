@@ -32,6 +32,8 @@
                             Item for Rent
                         {% endif %}
                     </h4>
+                    <a href="{% url 'Dashboard:deleteItems' item.slug item.id %}">Remove Item</a>
+
                 </div>
             </div>
         </div>

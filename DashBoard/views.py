@@ -45,8 +45,6 @@ class createItem(generic.CreateView):
 
 
 
-
-
 def getSubCategories(request):
     cat_id = request.GET.get('Category')
     if (cat_id == ""):
@@ -55,3 +53,11 @@ def getSubCategories(request):
         SubCategories = SubCategory.objects.filter(ParentCategory_id=cat_id)
 
     return render(request,'DashBoard/categoryDropdown.html',{"SubCategories":SubCategories})
+
+
+
+class deleteItems(generic.DeleteView):
+    model = Item
+    success_url = reverse_lazy('Dashboard:dashboard')
+
+

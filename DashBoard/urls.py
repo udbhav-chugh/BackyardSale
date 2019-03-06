@@ -22,6 +22,7 @@ urlpatterns = [
     path('', views.dashboard.as_view(), name='dashboard'),
     path('create/',views.createItem.as_view(), name='create'),
     path('ajax/load-subCats/', views.getSubCategories, name='ajax_load_subCats'),
+    path('delete/<slug:slug>/<int:pk>',views.deleteItems.as_view(), name='deleteItems'),
 ]
 
 

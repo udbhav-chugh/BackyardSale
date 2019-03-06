@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
-from DashBoard.models import Category, SubCategory, Item
+from DashBoard.models import Category, SubCategory, Item, NewUser
 from . import forms
 
 
@@ -90,3 +91,4 @@ def register(request):
         'userInfoForm': userInfoForm,
     }
     return render(request,'registration/register.html',context)
+
