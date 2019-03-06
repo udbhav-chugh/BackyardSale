@@ -6,9 +6,9 @@ from django.utils.text import slugify
 # Create your models here.
 
 class NewUser(models.Model):
-    user=models.OneToOneField(to=User,on_delete=models.CASCADE,primary_key=True)
-    PhoneNum= models.CharField(max_length=100)
-    Address=models.CharField(max_length=500)
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE, primary_key=True)
+    PhoneNum = models.CharField(max_length=100)
+    Address = models.CharField(max_length=500)
 
     def __str__(self):
         return self.user.username
@@ -21,9 +21,10 @@ class Category(models.Model):
     def __str__(self):
         return self.Name
 
-    def save(self,*args,**kwargs):
+    def save(self, *args, **kwargs):
         self.slug = slugify(self.Name)
-        super(Category,self).save(*args,**kwargs)
+        super(Category, self).save(*args, **kwargs)
+
 
 class SubCategory(models.Model):
     Name = models.CharField(max_length=250)
@@ -33,9 +34,9 @@ class SubCategory(models.Model):
     def __str__(self):
         return self.Name
 
-    def save(self,*args,**kwargs):
+    def save(self, *args, **kwargs):
         self.slug = slugify(self.Name)
-        super(SubCategory,self).save(*args,**kwargs)
+        super(SubCategory, self).save(*args, **kwargs)
 
 
 # Current Status
@@ -56,14 +57,12 @@ class Item(models.Model):
     Seller = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="Seller")
     CurrentStatus = models.IntegerField()
     RenterInfo = models.ForeignKey(to=User, default=None, on_delete=models.SET_NULL, related_name="Consumer", null=True, blank=True)
-    Description = models.CharField(max_length=1000, default= None,blank=True)
+    Description = models.CharField(max_length=1000, default=None, blank=True)
     slug = models.SlugField()
 
     def __str__(self):
         return self.ProductModel
 
-    def save(self,*args,**kwargs):
+    def save(self, *args, **kwargs):
         self.slug = slugify(self.ProductModel)
-        super(Item,self).save(*args,**kwargs)
-
-
+        super(Item, self).save(*args, **kwargs)

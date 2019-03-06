@@ -1,19 +1,20 @@
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
-from django.http import HttpResponse
-from django.views import generic
-from .models import NewUser,Item, SubCategory
-from .forms import ItemForm
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views import generic
+
+from .forms import ItemForm
+from .models import NewUser, Item, SubCategory
+
 
 # Create your views here.
-
 
 
 class dashboard(generic.DetailView):
     model = NewUser
     context_object_name = 'CurrentUser'
     template_name = 'DashBoard/dashboard.html'
+
     # Slug Field no longer needed, so Removed #
 
     def get_object(self, queryset=None):
@@ -44,16 +45,14 @@ class createItem(generic.CreateView):
         return kw
 
 
-
 def getSubCategories(request):
     cat_id = request.GET.get('Category')
-    if (cat_id == ""):
+    if cat_id == "":
         SubCategories = SubCategory.objects.none()
     else:
         SubCategories = SubCategory.objects.filter(ParentCategory_id=cat_id)
 
-    return render(request,'DashBoard/categoryDropdown.html',{"SubCategories":SubCategories})
-
+    return render(request, 'DashBoard/categoryDropdown.html', {"SubCategories": SubCategories})
 
 
 class deleteItems(generic.DeleteView):
@@ -64,20 +63,19 @@ class deleteItems(generic.DeleteView):
 class updateItems(generic.UpdateView):
     model = Item
     form_class = ItemForm
-    template_name = 'DashBoard/updateItem.html'
+    template_name = 'DashBoard/createItem.html'
     success_url = reverse_lazy('Dashboard:dashboard')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
     def form_valid(self, form):
         form.getCurrStatus()
         form.getSeller()
         return super(updateItems, self).form_valid(form)
-    #
+
     def get_form_kwargs(self):
         kw = super(updateItems, self).get_form_kwargs()
         kw['request'] = self.request  # the trick!
         return kw
-
-

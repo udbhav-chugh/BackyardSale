@@ -20,19 +20,14 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 
-
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.homeView.as_view(), name='home'),
-    path('dashboard/', include('DashBoard.urls',namespace='Dashboard')),
-    path('login/', views.loginUser, name='login' ),
-    path('logout/',views.logoutUser,name='logout'),
-    path('register/',views.register,name='register'),
-    path("items/<slug:slug>/<int:pk>", views.ItemView.as_view(), name='itemDetail'),
-    path('Subcategories/<slug:slug>/', views.subCategoryView.as_view(), name='subCatdetail'),
-    path('Categories/<slug:slug>/', views.CategoryView.as_view(), name='catDetail'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-
-
+                  path('admin/', admin.site.urls),
+                  path('', views.homeView.as_view(), name='home'),
+                  path('dashboard/', include('DashBoard.urls', namespace='Dashboard')),
+                  path('login/', views.loginUser, name='login'),
+                  path('logout/', views.logoutUser, name='logout'),
+                  path('register/', views.register, name='register'),
+                  path("items/<slug:slug>/<int:pk>", views.ItemView.as_view(), name='itemDetail'),
+                  path('Subcategories/<slug:slug>/', views.subCategoryView.as_view(), name='subCatdetail'),
+                  path('Categories/<slug:slug>/', views.CategoryView.as_view(), name='catDetail'),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

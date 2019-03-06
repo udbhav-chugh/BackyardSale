@@ -1,3 +1,4 @@
+# noinspection SpellCheckingInspection
 """BackyardSale URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -20,10 +21,8 @@ app_name = 'Dashboard'
 
 urlpatterns = [
     path('', views.dashboard.as_view(), name='dashboard'),
-    path('create/',views.createItem.as_view(), name='create'),
+    path('create/', views.createItem.as_view(), name='create'),
     path('ajax/load-subCats/', views.getSubCategories, name='ajax_load_subCats'),
-    path('delete/<slug:slug>/<int:pk>',views.deleteItems.as_view(), name='deleteItems'),
-    path('update/<slug:slug>/<int:pk>',views.updateItems.as_view(), name='updateItems'),
+    path('delete/<slug:slug>/<int:pk>', views.deleteItems.as_view(), name='deleteItems'),
+    path('update/<slug:slug>/<int:pk>', views.updateItems.as_view(), name='updateItems'),
 ]
-
-

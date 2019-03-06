@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Item, Category, SubCategory, NewUser
-import django.contrib.auth.admin
 
+from .models import Item, Category, SubCategory, NewUser
 
 admin.site.register(Item)
 admin.site.register(NewUser)
