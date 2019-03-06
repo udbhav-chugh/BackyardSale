@@ -20,7 +20,8 @@ app_name = 'Dashboard'
 
 urlpatterns = [
     path('', views.dashboard.as_view(), name='dashboard'),
-    path('create/',views.createItem.as_view(), name='create')
+    path('create/',views.createItem.as_view(), name='create'),
+    path('ajax/load-subCats/', views.getSubCategories, name='ajax_load_subCats'),
 ]
 
 

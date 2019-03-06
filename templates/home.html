@@ -3,13 +3,17 @@
 
 {% block body %}
     {# Show all the categories here! #}
-    {% for category in Categories %}
-        <h1>{{ category }}</h1>
-        {% for subCat in SubCategories %}
-            {% if subCat.ParentCategory == category %}
-                <a href="{{ subCat }}/"> {{ subCat }} </a>
-            {% endif %}
+    <div align="center">
+        {% for category in Categories %}
+            <h1>{{ category }}</h1>
+            {% for subCat in SubCategories %}
+                {% if subCat.ParentCategory == category %}
+                    <a href="{{ subCat }}/"> {{ subCat }} </a>
+                    <br>
+                {% endif %}
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
+    </div>
+
 
 {% endblock %}

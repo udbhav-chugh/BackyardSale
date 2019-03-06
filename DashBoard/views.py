@@ -2,8 +2,9 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views import generic
-from .models import NewUser,Item
+from .models import NewUser,Item, SubCategory
 from .forms import ItemForm
+from django.shortcuts import render
 
 # Create your views here.
 
@@ -43,3 +44,10 @@ class createItem(generic.CreateView):
         return kw
 
 
+
+
+
+def getSubCategories(request):
+    cat_id = request.GET.get('Category')
+    SubCategories = SubCategory.objects.filter(ParentCategory_id=cat_id)
+    return render(request,'DashBoard/categoryDropdown.html',{"SubCategories":SubCategories})

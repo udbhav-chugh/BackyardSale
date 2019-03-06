@@ -2,10 +2,30 @@
 
 {% block body %}
 
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data" id="itemForm" data-subCat-url="{% url 'Dashboard:ajax_load_subCats'  %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit"> Submit </button>
     </form>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_Category").change(function () {
+      var url = $("#itemForm").attr("data-subCat-url");  // get the url of the `load_subCats` view
+      var Category = $(this).val();  // get the selected Category ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/dashboard/ajax/load-subCats/)
+        data: {
+          'Category': Category       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `getSubCategories` view function
+          $("#id_SubCategory").html(data);  // replace the contents of the SubCategory input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
 
 {% endblock %}
