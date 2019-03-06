@@ -33,6 +33,8 @@
                         {% endif %}
                     </h4>
                     <a href="{% url 'Dashboard:deleteItems' item.slug item.id %}">Remove Item</a>
+                    <br>
+                    <a href="{% url 'Dashboard:updateItems' item.slug item.id %}">Update Item</a>
 
                 </div>
             </div>

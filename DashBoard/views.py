@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views import generic
 from .models import NewUser,Item, SubCategory
-from .forms import ItemForm
+from .forms import ItemForm, UpdateForm
 from django.shortcuts import render
 
 # Create your views here.
@@ -59,5 +59,25 @@ def getSubCategories(request):
 class deleteItems(generic.DeleteView):
     model = Item
     success_url = reverse_lazy('Dashboard:dashboard')
+
+
+class updateItems(generic.UpdateView):
+    model = Item
+    form_class = UpdateForm
+    template_name = 'DashBoard/updateItem.html'
+    success_url = reverse_lazy('Dashboard:dashboard')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+    def form_valid(self, form):
+        form.getCurrStatus()
+        form.getSeller()
+        return super(updateItems, self).form_valid(form)
+    #
+    def get_form_kwargs(self):
+        kw = super(updateItems, self).get_form_kwargs()
+        kw['request'] = self.request  # the trick!
+        return kw
 
 
