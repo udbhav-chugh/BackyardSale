@@ -114,6 +114,7 @@ def search(request):
         'Items' : Items,
         'Categories': Categories,
         'SubCategories': SubCategories,
+        'search_text': search_text,
     }
 
     return render(request,'getResults.html',context)
