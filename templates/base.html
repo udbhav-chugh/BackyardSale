@@ -1,6 +1,8 @@
 {% block body %}
 {% endblock %}
 
+{% load static %}
+
 {% if user.is_authenticated == True and user.is_active == True%}
     <br>
     <a href="{% url 'logout' %}">Logout</a>
@@ -13,6 +15,19 @@
     <a href="{% url 'register' %}">Register</a>
 {% endif %}
 
+
 <br>
 <a href ="/">Home</a>
+
+<br>
+<label for="search">Search: </label>
+<input type="text" id="search" name="search" />
+{% csrf_token %}
+<ul id="search-results">
+
+</ul>
+
+<script src="{% static 'js/jquery1.js' %}"> </script>
+<script src="{% static 'js/getResults.js' %}"></script>
+
 

@@ -1,0 +1,29 @@
+{% if Items.count > 0 %}
+    <h4> Items</h4>
+{% endif %}
+
+
+{% for item in Items %}
+    <li><a href="{% url 'itemDetail' item.slug item.id %}">{{ item.ProductModel }}</a></li>
+{% endfor %}
+
+
+{% if SubCategories.count > 0 %}
+    <h4> SubCategories</h4>
+{% endif %}
+
+{% for subCat in SubCategories %}
+    <li><a href="{% url 'subCatdetail' subCat.slug %}">{{ subCat.Name }}</a></li>
+{% endfor %}
+
+{% if Categories.count > 0 %}
+    <h4> Categories</h4>
+{% endif %}
+
+{% for cat in Categories %}
+    <li><a href="{% url 'catDetail' cat.slug %}">{{ cat.Name }}</a></li>
+{% endfor %}
+
+{% if SubCategories.count == 0 and Categories.count == 0 and Items.count == 0 %}
+    <h4> No Results </h4>
+{% endif %}

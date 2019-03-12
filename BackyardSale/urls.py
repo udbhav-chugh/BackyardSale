@@ -30,4 +30,5 @@ urlpatterns = [
                   path("items/<slug:slug>/<int:pk>", views.ItemView.as_view(), name='itemDetail'),
                   path('Subcategories/<slug:slug>/', views.subCategoryView.as_view(), name='subCatdetail'),
                   path('Categories/<slug:slug>/', views.CategoryView.as_view(), name='catDetail'),
+                  path('search/', views.search , name='search'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

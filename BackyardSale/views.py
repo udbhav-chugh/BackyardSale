@@ -92,3 +92,22 @@ def register(request):
     }
     return render(request,'registration/register.html',context)
 
+
+def search(request):
+    if request.method == 'POST':
+        search_text = request.POST['search_text']
+    else:
+        search_text = ''
+
+
+    Items = Item.objects.filter(ProductModel__contains=search_text)
+    Categories = Category.objects.filter(Name__contains=search_text)
+    SubCategories = SubCategory.objects.filter(Name__contains=search_text)
+
+    context = {
+        'Items' : Items,
+        'Categories': Categories,
+        'SubCategories': SubCategories,
+    }
+
+    return render(request,'getResults.html',context)
