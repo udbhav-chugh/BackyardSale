@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.utils import timezone
 
 
 # Create your models here.
@@ -44,6 +45,8 @@ class SubCategory(models.Model):
 # 1) Item available for Rent
 # 2) Item Currently Rented
 # 3) Item Sold
+# 4) In Transaction for Sale
+# 5) In Transaction for Rent
 
 class Item(models.Model):
     Category = models.ForeignKey(to=Category, on_delete=models.SET_NULL, related_name="Category", null=True)
@@ -59,6 +62,8 @@ class Item(models.Model):
     RenterInfo = models.ForeignKey(to=User, default=None, on_delete=models.SET_NULL, related_name="Consumer", null=True, blank=True)
     Description = models.CharField(max_length=1000, default=None, blank=True)
     slug = models.SlugField()
+    otp = models.IntegerField(default=None,blank=True)
+    otpExpiryTime = models.DateTimeField(default=None)
 
     def __str__(self):
         return self.ProductModel
@@ -66,3 +71,15 @@ class Item(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.ProductModel)
         super(Item, self).save(*args, **kwargs)
+
+    def withinTransaction(self):
+        now = timezone.now()
+        if(now > self.otpExpiryTime):
+            self.otp = None
+            self.otpExpiryTime = None # Arithmetic Error Possible
+            self.CurrentStatus = self.CurrentStatus - 4
+            self.save()
+            return False
+
+        return True
+

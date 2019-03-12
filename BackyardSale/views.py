@@ -14,6 +14,7 @@ class homeView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(homeView, self).get_context_data(**kwargs) # Calling Base Class to get the original context data #
+        updateTransactionItems()
         context['SubCategories'] = SubCategory.objects.all() # Adding SubCategories to the context #
         return context
 
@@ -27,7 +28,8 @@ class subCategoryView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(subCategoryView, self).get_context_data(**kwargs) # Calling the Base method to get the original context data #
-        context['Items'] = Item.objects.filter(SubCategory=self.object) # Adding Items to the context #
+        updateTransactionItems()
+        context['Items'] = Item.objects.filter(SubCategory=self.object, CurrentStatus__lte=1) # Adding Items to the context #
         return context
 
 
@@ -38,7 +40,8 @@ class CategoryView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CategoryView, self).get_context_data(**kwargs) # Calling the Base method to get the original context data #
-        context['Items'] = Item.objects.filter(Category=self.object)  # Adding Items to the context #
+        updateTransactionItems()
+        context['Items'] = Item.objects.filter(Category=self.object, CurrentStatus__lte=1)  # Adding Items to the context #
         return context
 
 
@@ -100,7 +103,7 @@ def search(request):
         search_text = ''
 
 
-    Items = Item.objects.filter(ProductModel__contains=search_text)
+    Items = Item.objects.filter(ProductModel__contains=search_text, CurrentStatus__lte=1)
     Categories = Category.objects.filter(Name__contains=search_text)
     SubCategories = SubCategory.objects.filter(Name__contains=search_text)
 
@@ -111,3 +114,9 @@ def search(request):
     }
 
     return render(request,'getResults.html',context)
+
+
+def updateTransactionItems():
+    inTransactionItems = Item.objects.filter(CurrentStatus__range=[4, 6])
+    for x in inTransactionItems:
+        x.withinTransaction()

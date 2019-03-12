@@ -5,6 +5,7 @@ from django.views import generic
 
 from .forms import ItemForm
 from .models import NewUser, Item, SubCategory
+from BackyardSale.views import updateTransactionItems
 
 
 # Create your views here.
@@ -23,6 +24,7 @@ class dashboard(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(dashboard, self).get_context_data(**kwargs)
+        updateTransactionItems()
         context['Items'] = Item.objects.filter(Seller=self.request.user)
 
         return context
