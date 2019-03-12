@@ -62,8 +62,8 @@ class Item(models.Model):
     RenterInfo = models.ForeignKey(to=User, default=None, on_delete=models.SET_NULL, related_name="Consumer", null=True, blank=True)
     Description = models.CharField(max_length=1000, default=None, blank=True)
     slug = models.SlugField()
-    otp = models.IntegerField(default=None,blank=True)
-    otpExpiryTime = models.DateTimeField(default=None)
+    otp = models.IntegerField(null=True, blank=True,default=0)
+    otpExpiryTime = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.ProductModel

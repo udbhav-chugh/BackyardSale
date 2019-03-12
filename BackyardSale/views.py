@@ -1,10 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse,get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 from DashBoard.models import Category, SubCategory, Item, NewUser
 from . import forms
+from django.utils import timezone
+from datetime import timedelta
+import random
 
 
 
@@ -114,6 +117,17 @@ def search(request):
     }
 
     return render(request,'getResults.html',context)
+
+
+def ItemBuy(request,slug,pk):
+    otp = random.randint(100000, 999999)
+    now= timezone.now()
+    current_item=get_object_or_404(Item,pk=pk)
+    current_item.otp=otp
+    current_item.otpExpiryTime=now+timedelta(days=1)
+    current_item.CurrentStatus+=4
+    current_item.save()
+    return HttpResponse("Otp generated successfully")
 
 
 def updateTransactionItems():
