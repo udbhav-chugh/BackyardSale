@@ -25,7 +25,11 @@ class dashboard(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(dashboard, self).get_context_data(**kwargs)
         updateTransactionItems()
-        context['Items'] = Item.objects.filter(Seller=self.request.user)
+        context['ItemsListed'] = Item.objects.filter(Seller=self.request.user, CurrentStatus__range=[0,1]) # Check for range #
+        context['ItemsSold'] = Item.objects.filter(Seller=self.request.user, CurrentStatus=2)
+        context['ItemsRented'] = Item.objects.filter(Seller=self.request.user, CurrentStatus=3)
+        context['RentedItemsbyMe'] = Item.objects.filter(RenterInfo=self.request.user, CurrentStatus=3)
+        context['BoughtItems'] = Item.objects.filter(RenterInfo=self.request.user, CurrentStatus=2)
 
         return context
 
@@ -81,3 +85,20 @@ class updateItems(generic.UpdateView):
         kw = super(updateItems, self).get_form_kwargs()
         kw['request'] = self.request  # the trick!
         return kw
+
+
+class approveView(generic.ListView):
+    template_name = 'DashBoard/pendingTransactions.html'
+    context_object_name = 'Items'
+
+    def get_queryset(self):
+        return Item.objects.filter(CurrentStatus__range=[4,6], Seller=self.request.user)
+        #return Item.objects.all()
+
+def approveItem(request, slug, pk):
+    pass
+
+
+
+
+

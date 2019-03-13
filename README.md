@@ -11,6 +11,8 @@ To do list:
 4)Google Maps
 5) Temperorary events like manthan renting(free)
 6)Chat between buyer and seller
+7) Notify failed transactions
+8) User Authentication on Items
 
 Things to add in dashboard:
 1)personal info edit

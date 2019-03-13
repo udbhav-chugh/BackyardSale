@@ -120,14 +120,23 @@ def search(request):
 
 
 def ItemBuy(request,slug,pk):
-    otp = random.randint(100000, 999999)
-    now= timezone.now()
-    current_item=get_object_or_404(Item,pk=pk)
-    current_item.otp=otp
-    current_item.otpExpiryTime=now+timedelta(days=1)
-    current_item.CurrentStatus+=4
-    current_item.save()
-    return HttpResponse("Otp generated successfully")
+    if request.user.is_authenticated:
+        otp = random.randint(100000, 999999)
+        now= timezone.now()
+        current_item=get_object_or_404(Item,pk=pk)
+        current_item.otp=otp
+        current_item.otpExpiryTime=now+timedelta(days=1)
+        current_item.RenterInfo = request.user
+
+        if(current_item.CurrentStatus == 0):
+            current_item.CurrentStatus = 4
+        elif(current_item.CurrentStatus == 1):
+            current_item.CurrentStatus = 5
+
+        current_item.save()
+        return HttpResponse("Otp generated successfully")
+    else:
+        return redirect(to='/login/?next='+request.path)
 
 
 def updateTransactionItems():

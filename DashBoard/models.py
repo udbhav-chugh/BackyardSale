@@ -43,8 +43,8 @@ class SubCategory(models.Model):
 # Current Status
 # 0) Item available for Sale
 # 1) Item available for Rent
-# 2) Item Currently Rented
-# 3) Item Sold
+# 2) Item Sold
+# 3) Item Currently Rented
 # 4) In Transaction for Sale
 # 5) In Transaction for Rent
 
@@ -78,6 +78,7 @@ class Item(models.Model):
             self.otp = None
             self.otpExpiryTime = None # Arithmetic Error Possible
             self.CurrentStatus = self.CurrentStatus - 4
+            self.RenterInfo = None
             self.save()
             return False
 

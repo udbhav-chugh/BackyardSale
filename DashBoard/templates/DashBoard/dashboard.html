@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
 
-{## Current Status #}
-{## 0) Item available for Sale #}
-{## 1) Item available for Rent #}
-{## 2) Item Currently Rented #}
-{## 3) Item Sold #}
 
 {% block body %}
     {# Show all the categories here! #}
     <h1>{{ CurrentUser.user }}</h1>
     <h3>Address: {{ CurrentUser.Address }}</h3>
     <h3>Contact Info: {{ CurrentUser.PhoneNum }}</h3>
-    {% for item in Items %}
+
+    {% if ItemsListed.count > 0 %}
+    <h1>Items Listed</h1>
+    {% for item in ItemsListed %}
         <div>
             <div>
                 <h3>{{ item.ProductModel }}</h3>
@@ -40,7 +38,97 @@
             </div>
         </div>
     {% endfor %}
+    {% endif %}
+
+    {% if ItemsSold.count > 0 %}
+    <h1>Items Sold</h1>
+    {% for item in ItemsSold %}
+        <div>
+            <div>
+                <h3>{{ item.ProductModel }}</h3>
+            </div>
+            <div>
+                <!-- Add Link to Details Here -->
+                <a href="{% url 'itemDetail' item.slug item.id %}">
+                    <img src="{{ item.ProductImage.url }}">
+                </a>
+                <div>
+                    <h3>
+                        Price: {{ item.ProductPrice }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if ItemsRented.count > 0 %}
+    <h1>Items Rented</h1>
+    {% for item in ItemsRented %}
+        <div>
+            <div>
+                <h3>{{ item.ProductModel }}</h3>
+            </div>
+            <div>
+                <!-- Add Link to Details Here -->
+                <a href="{% url 'itemDetail' item.slug item.id %}">
+                    <img src="{{ item.ProductImage.url }}">
+                </a>
+                <div>
+                    <h3>
+                        Price: {{ item.ProductPrice }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if BoughtItems.count > 0 %}
+    <h1>Items Purchased</h1>
+    {% for item in BoughtItems %}
+        <div>
+            <div>
+                <h3>{{ item.ProductModel }}</h3>
+            </div>
+            <div>
+                <!-- Add Link to Details Here -->
+                <a href="{% url 'itemDetail' item.slug item.id %}">
+                    <img src="{{ item.ProductImage.url }}">
+                </a>
+                <div>
+                    <h3>
+                        Price: {{ item.ProductPrice }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if RentedItemsbyMe.count > 0 %}
+    <h1>Items Rented</h1>
+    {% for item in RentedItemsbyMe %}
+        <div>
+            <div>
+                <h3>{{ item.ProductModel }}</h3>
+            </div>
+            <div>
+                <!-- Add Link to Details Here -->
+                <a href="{% url 'itemDetail' item.slug item.id %}">
+                    <img src="{{ item.ProductImage.url }}">
+                </a>
+                <div>
+                    <h3>
+                        Price: {{ item.ProductPrice }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
 
     <a href="{% url 'Dashboard:create' %}">Create A New Item</a>
+    <a href="{% url 'Dashboard:approve' %}">Approve Transactions</a>
 
 {% endblock %}
