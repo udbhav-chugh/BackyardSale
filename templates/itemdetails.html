@@ -22,7 +22,9 @@
                     <p>
                         Seller:  {{ Item.Seller.username }}
                     </p>
+                    {% if Item.CurrentStatus <= 1 %}
                     <a href="{% url 'itemBuy' Item.slug Item.pk %}">Buy</a>
+                    {% endif %}
     </div>
 
 

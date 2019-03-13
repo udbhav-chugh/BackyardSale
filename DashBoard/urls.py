@@ -23,6 +23,7 @@ urlpatterns = [
     path('', views.dashboard.as_view(), name='dashboard'),
     path('create/', views.createItem.as_view(), name='create'),
     path('ajax/load-subCats/', views.getSubCategories, name='ajax_load_subCats'),
+    # path('delete/<slug:slug>/<int:pk>', views.deleteCheck, name='deleteCheck'),
     path('delete/<slug:slug>/<int:pk>', views.deleteItems.as_view(), name='deleteItems'),
     path('update/<slug:slug>/<int:pk>', views.updateItems.as_view(), name='updateItems'),
     path('approve/', views.approveView.as_view(), name='approve'),

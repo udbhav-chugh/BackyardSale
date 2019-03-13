@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
-from django.shortcuts import get_object_or_404
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -14,9 +15,12 @@ from django.contrib import messages
 
 
 class dashboard(generic.DetailView):
+
     model = NewUser
     context_object_name = 'CurrentUser'
     template_name = 'DashBoard/dashboard.html'
+
+
 
     # Slug Field no longer needed, so Removed #
 
@@ -61,6 +65,13 @@ def getSubCategories(request):
         SubCategories = SubCategory.objects.filter(ParentCategory_id=cat_id)
 
     return render(request, 'DashBoard/categoryDropdown.html', {"SubCategories": SubCategories})
+
+# def deleteCheck(request,slug,pk):
+#     obj=get_object_or_404(Item,pk=pk)
+#     if(obj.Seller != request.user or obj.CurrentStatus > 1):
+#         raise Http404("This page doesn't exist")
+#     else:
+#         return deleteItems.as_view(request)
 
 
 class deleteItems(generic.DeleteView):

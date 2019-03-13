@@ -42,5 +42,9 @@
         <button type="submit"> Submit</button>
     </form>
 
+    {% if error == '' %}
+    {% else %}
+        <h4>Invalid OTP</h4>
+    {% endif %}
 
 {% endblock %}

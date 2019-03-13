@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.http import Http404
 from django.shortcuts import redirect
 from django.shortcuts import render, HttpResponse,get_object_or_404
 from django.urls import reverse_lazy
@@ -52,6 +53,15 @@ class ItemView(generic.DetailView):
     model = Item
     context_object_name = 'Item'
     template_name = 'itemdetails.html'
+
+    def get_object(self, queryset=None):
+        obj=super(ItemView, self).get_object()
+
+        if(obj.CurrentStatus > 1 and obj.Seller != self.request.user and obj.RenterInfo != self.request.user):
+            raise Http404("This Page doesn't Exist")
+        else:
+            return obj
+
 
 def loginUser(request):
     if request.method == "POST":
@@ -125,6 +135,16 @@ def ItemBuy(request,slug,pk):
         otp = random.randint(100000, 999999)
         now= timezone.now()
         current_item=get_object_or_404(Item,pk=pk)
+
+
+        if(current_item.CurrentStatus > 1):
+            raise Http404("This page doesn't exist")
+
+
+        if (current_item.Seller == request.user):
+            raise Http404("Lister cannot buy his/her own product")
+
+
         current_item.otp=otp
         current_item.otpExpiryTime=now+timedelta(days=1)
         current_item.RenterInfo = request.user
