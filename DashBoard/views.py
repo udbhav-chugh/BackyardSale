@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -113,9 +114,10 @@ class approveItem(generic.FormView):
             current_item.save()
             return super(approveItem, self).form_valid(form=form)
         else:
-            # messages.info(self.request, 'Invalid OTP')
-            return self.form_invalid(form=form) # Haven't Added Error Message #
-            # form.fields['OTP'].errors = 'Invalid OTP'
+            form.errors['OTP'] = 'Invalid OTP'
+            context = self.get_context_data()
+            context['form'] = form
+            return render(self.request,'DashBoard/approveItem.html',context)
 
 
     def get_context_data(self, **kwargs):

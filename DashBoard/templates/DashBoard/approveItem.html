@@ -28,7 +28,17 @@
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in form %}
+        <div>
+            <div>
+                <span>{{ field.errors }}</span>
+            </div>
+            <p>
+                <label>{{ field.label_tag }}</label>
+            {{ field }}
+            </p>
+        </div>
+        {% endfor %}
         <button type="submit"> Submit</button>
     </form>
 

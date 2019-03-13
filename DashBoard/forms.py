@@ -33,3 +33,6 @@ class ItemForm(forms.ModelForm):
 
 class verifyOTP(forms.Form):
     OTP = forms.IntegerField(min_value=100000, max_value=999999)
+
+
+
