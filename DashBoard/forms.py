@@ -29,3 +29,7 @@ class ItemForm(forms.ModelForm):
                 pass  # invalid input from the client; ignore and fallback to empty City queryset
         elif self.instance.pk:
             self.fields['SubCategory'].queryset = models.SubCategory.objects.filter(ParentCategory=self.instance.Category)
+
+
+class verifyOTP(forms.Form):
+    OTP = forms.IntegerField(min_value=100000, max_value=999999)

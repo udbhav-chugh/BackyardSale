@@ -26,4 +26,5 @@ urlpatterns = [
     path('delete/<slug:slug>/<int:pk>', views.deleteItems.as_view(), name='deleteItems'),
     path('update/<slug:slug>/<int:pk>', views.updateItems.as_view(), name='updateItems'),
     path('approve/', views.approveView.as_view(), name='approve'),
+    path('approve/<slug:slug>/<int:pk>', views.approveItem.as_view(), name='approveItem'),
 ]

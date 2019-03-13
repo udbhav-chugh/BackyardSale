@@ -3,9 +3,10 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import ItemForm
+from .forms import ItemForm, verifyOTP
 from .models import NewUser, Item, SubCategory
 from BackyardSale.views import updateTransactionItems
+from django.contrib import messages
 
 
 # Create your views here.
@@ -95,8 +96,39 @@ class approveView(generic.ListView):
         return Item.objects.filter(CurrentStatus__range=[4,6], Seller=self.request.user)
         #return Item.objects.all()
 
-def approveItem(request, slug, pk):
-    pass
+class approveItem(generic.FormView):
+    form_class = verifyOTP
+    template_name = 'DashBoard/approveItem.html'
+    success_url = reverse_lazy('Dashboard:dashboard')
+
+
+    def form_valid(self, form):
+        current_item = get_object_or_404(Item,pk=self.kwargs['pk'])
+
+        if(current_item.otp == form.cleaned_data['OTP']):
+            if(current_item.CurrentStatus == 4 or current_item.CurrentStatus == 5):
+                current_item.CurrentStatus -= 2
+            current_item.otp = None
+            current_item.otpExpiryTime = None
+            current_item.save()
+            return super(approveItem, self).form_valid(form=form)
+        else:
+            # messages.info(self.request, 'Invalid OTP')
+            return self.form_invalid(form=form) # Haven't Added Error Message #
+            # form.fields['OTP'].errors = 'Invalid OTP'
+
+
+    def get_context_data(self, **kwargs):
+        context = super(approveItem, self).get_context_data()
+        current_item = get_object_or_404(Item,pk=self.kwargs['pk'])
+        context['Item'] = current_item
+        return context
+
+
+
+
+
+
 
 
 

@@ -24,7 +24,7 @@
                             Item for Rent
                         {% endif %}
                     </h4>
-                <a href="#"> Approve Transaction </a>
+                <a href="{% url 'Dashboard:approveItem' item.slug item.id %}"> Approve Transaction </a>
                 </div>
             </div>
         </div>

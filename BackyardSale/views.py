@@ -135,7 +135,7 @@ def ItemBuy(request,slug,pk):
             current_item.CurrentStatus = 5
 
         current_item.save()
-        return HttpResponse("Otp generated successfully")
+        return HttpResponse("Otp generated successfully" + " OTP is " + str(otp))
     else:
         return redirect(to='/login/?next='+request.path)
 
