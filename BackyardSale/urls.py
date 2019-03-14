@@ -27,10 +27,13 @@ urlpatterns = [
                   path('login/', views.loginUser, name='login'),
                   path('logout/', views.logoutUser, name='logout'),
                   path('register/', views.register, name='register'),
+                  path('completedetails/',views.completeDetails,name='completedetails'),
+                  path('updateuser/',views.updateuser,name='updateuser'),
                   path("items/<slug:slug>/<int:pk>", views.ItemView.as_view(), name='itemDetail'),
                   path('Subcategories/<slug:slug>/', views.subCategoryView.as_view(), name='subCatdetail'),
                   path('Categories/<slug:slug>/', views.CategoryView.as_view(), name='catDetail'),
                   path('search/', views.search , name='search'),
                   path('buy/<slug:slug>/<int:pk>',views.ItemBuy,name='itemBuy'),
+                  path('auth/', include('social_django.urls', namespace='social')), #social network auth
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

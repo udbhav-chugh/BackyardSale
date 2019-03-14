@@ -39,6 +39,9 @@
                 <div class="panel-footer">
                     Don't have an account? <a href="{% url 'register' %}">Click here</a> to register.
                 </div>
+                <br>
+                <p><strong>-- OR --</strong></p>
+                <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
             </div>
         </div>
     </div>

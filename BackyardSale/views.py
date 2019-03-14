@@ -10,6 +10,7 @@ from django.utils import timezone
 from datetime import timedelta
 import random
 
+from django.contrib.auth.decorators import login_required
 
 
 class homeView(generic.ListView):
@@ -109,6 +110,41 @@ def register(request):
     return render(request,'registration/register.html',context)
 
 
+def completeDetails(request):
+    userInfoForm = forms.UserInfoForm(request.POST or None)
+    if userInfoForm.is_valid():
+        userInfo = userInfoForm.save(commit=False)
+        userInfo.user = request.user
+        userInfo.save()
+        return redirect(to='/dashboard/')
+
+    context = {
+        'userInfoForm': userInfoForm,
+    }
+    return render(request, 'registration/register.html', context)
+
+
+def updateuser(request):
+    userForm = forms.updateUser(request.POST or None)
+    userInfoForm = forms.UserInfoForm(request.POST or None)
+    if userForm.is_valid() and userInfoForm.is_valid():
+        current_user=request.user
+        current_user.first_name = userForm.cleaned_data['first_name']
+        current_user.last_name = userForm.cleaned_data['last_name']
+        current_user.email = userForm.cleaned_data['email']
+        current_user.save()
+        userInfo = userInfoForm.save(commit=False)
+        userInfo.user = current_user
+        userInfo.save()
+        return redirect(to='/')
+
+    context = {
+        'userForm': userForm,
+        'userInfoForm': userInfoForm,
+    }
+    return render(request, 'registration/update.html', context)
+
+
 def search(request):
     if request.method == 'POST':
         search_text = request.POST['search_text']
@@ -164,3 +200,9 @@ def updateTransactionItems():
     inTransactionItems = Item.objects.filter(CurrentStatus__range=[4, 6])
     for x in inTransactionItems:
         x.withinTransaction()
+
+
+
+@login_required
+def home(request):
+    return render(request, 'home.html')

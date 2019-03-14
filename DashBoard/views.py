@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -23,6 +23,13 @@ class dashboard(generic.DetailView):
 
 
     # Slug Field no longer needed, so Removed #
+    def get(self, request, *args, **kwargs):
+        try:
+            return super(dashboard, self).get(request,*args,**kwargs)
+        except Http404:
+            return redirect(to='/completedetails')
+
+
 
     def get_object(self, queryset=None):
         obj = get_object_or_404(self.model, user=self.request.user)
