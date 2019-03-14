@@ -111,17 +111,22 @@ def register(request):
 
 
 def completeDetails(request):
+    userForm = forms.PasswordForm(request.POST or None)
     userInfoForm = forms.UserInfoForm(request.POST or None)
-    if userInfoForm.is_valid():
+    if userForm.is_valid() and userInfoForm.is_valid():
+        current_user=request.user
+        current_user.password = userForm.cleaned_data['password']
+        current_user.save()
         userInfo = userInfoForm.save(commit=False)
-        userInfo.user = request.user
+        userInfo.user = current_user
         userInfo.save()
         return redirect(to='/dashboard/')
 
     context = {
+        'userForm': userForm,
         'userInfoForm': userInfoForm,
     }
-    return render(request, 'registration/register.html', context)
+    return render(request, 'registration/completedetail.html', context)
 
 
 def updateuser(request):
@@ -142,7 +147,7 @@ def updateuser(request):
         'userForm': userForm,
         'userInfoForm': userInfoForm,
     }
-    return render(request, 'registration/update.html', context)
+    return render(request, 'registration/register.html', context)
 
 
 def search(request):

@@ -23,6 +23,12 @@ class updateUser(forms.ModelForm):
         model = User
         fields = ['email', 'first_name', 'last_name']
 
+class PasswordForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['password']
 
 class UserInfoForm(forms.ModelForm):
     PhoneNum = forms.CharField(max_length=15, widget=forms.NumberInput)
