@@ -66,17 +66,16 @@ def getSubCategories(request):
 
     return render(request, 'DashBoard/categoryDropdown.html', {"SubCategories": SubCategories})
 
-# def deleteCheck(request,slug,pk):
-#     obj=get_object_or_404(Item,pk=pk)
-#     if(obj.Seller != request.user or obj.CurrentStatus > 1):
-#         raise Http404("This page doesn't exist")
-#     else:
-#         return deleteItems.as_view(request)
-
 
 class deleteItems(generic.DeleteView):
     model = Item
     success_url = reverse_lazy('Dashboard:dashboard')
+
+    def get(self, **kwargs):
+        if (self.request.user != self.get_object().Seller or self.get_object().CurrentStatus > 1):
+            raise Http404('Page doesn\'t exist')
+        else:
+            super(deleteItems, self).get(**kwargs)
 
 
 class updateItems(generic.UpdateView):
@@ -106,7 +105,6 @@ class approveView(generic.ListView):
 
     def get_queryset(self):
         return Item.objects.filter(CurrentStatus__range=[4,6], Seller=self.request.user)
-        #return Item.objects.all()
 
 class approveItem(generic.FormView):
     form_class = verifyOTP
@@ -125,7 +123,7 @@ class approveItem(generic.FormView):
             current_item.save()
             return super(approveItem, self).form_valid(form=form)
         else:
-            form.errors['OTP'] = 'Invalid OTP'
+            form.add_error('OTP',"Invalid OTP")
             context = self.get_context_data()
             context['form'] = form
             return render(self.request,'DashBoard/approveItem.html',context)
