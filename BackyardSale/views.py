@@ -9,7 +9,6 @@ from . import forms
 from django.utils import timezone
 from datetime import timedelta
 import random
-
 from django.contrib.auth.decorators import login_required
 
 
@@ -25,6 +24,7 @@ class homeView(generic.ListView):
 
     def get_queryset(self):
         return Category.objects.all()
+
 
 class subCategoryView(generic.DetailView):
     model = SubCategory
@@ -80,10 +80,10 @@ def loginUser(request):
     else:
         return render(request,'registration/login.html')
 
+
 def logoutUser(request):
     logout(request)
     return  redirect(to="/")
-
 
 
 def register(request):
@@ -115,7 +115,7 @@ def completeDetails(request):
     userInfoForm = forms.UserInfoForm(request.POST or None)
     if userForm.is_valid() and userInfoForm.is_valid():
         current_user=request.user
-        current_user.password = userForm.cleaned_data['password']
+        current_user.set_password(userForm.cleaned_data['password'])
         current_user.save()
         userInfo = userInfoForm.save(commit=False)
         userInfo.user = current_user
@@ -130,13 +130,14 @@ def completeDetails(request):
 
 
 def updateuser(request):
-    userForm = forms.updateUser(request.POST or None)
-    userInfoForm = forms.UserInfoForm(request.POST or None)
+    userForm = forms.updateUser(request.POST or None, instance=request.user)
+    userInfoForm = forms.UserInfoForm(request.POST or None, instance=NewUser.objects.get(user=request.user))
     if userForm.is_valid() and userInfoForm.is_valid():
         current_user=request.user
         current_user.first_name = userForm.cleaned_data['first_name']
         current_user.last_name = userForm.cleaned_data['last_name']
         current_user.email = userForm.cleaned_data['email']
+        current_user.set_password(userForm.cleaned_data['password'])
         current_user.save()
         userInfo = userInfoForm.save(commit=False)
         userInfo.user = current_user
@@ -205,9 +206,3 @@ def updateTransactionItems():
     inTransactionItems = Item.objects.filter(CurrentStatus__range=[4, 6])
     for x in inTransactionItems:
         x.withinTransaction()
-
-
-
-@login_required
-def home(request):
-    return render(request, 'home.html')
