@@ -13,6 +13,7 @@ To do list:
 6)Chat between buyer and seller
 7) Notify failed transactions
 8) User Authentication on Items
+9) Number of items in model. Eg: User wants to list 4 chairs together.
 
 Things to add in dashboard:
 1)personal info edit
