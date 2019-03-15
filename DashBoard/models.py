@@ -62,7 +62,7 @@ class Item(models.Model):
     RenterInfo = models.ForeignKey(to=User, default=None, on_delete=models.SET_NULL, related_name="Consumer", null=True, blank=True)
     Description = models.CharField(max_length=1000, default=None, blank=True)
     slug = models.SlugField()
-    otp = models.IntegerField(null=True, blank=True,default=0)
+    otp = models.IntegerField(null=True, blank=True, default=0)
     otpExpiryTime = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
@@ -74,9 +74,9 @@ class Item(models.Model):
 
     def withinTransaction(self):
         now = timezone.now()
-        if(now > self.otpExpiryTime):
+        if now > self.otpExpiryTime:
             self.otp = None
-            self.otpExpiryTime = None # Arithmetic Error Possible
+            self.otpExpiryTime = None  # Arithmetic Error Possible
             self.CurrentStatus = self.CurrentStatus - 4
             self.RenterInfo = None
             self.save()
