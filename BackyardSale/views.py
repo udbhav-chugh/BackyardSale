@@ -89,6 +89,7 @@ def logoutUser(request):
 def register(request):
     userForm = forms.UserForm(request.POST or None)
     userInfoForm = forms.UserInfoForm(request.POST or None)
+
     if userForm.is_valid() and userInfoForm.is_valid():
         user=userForm.save(commit=False)
         userInfo=userInfoForm.save(commit=False)
