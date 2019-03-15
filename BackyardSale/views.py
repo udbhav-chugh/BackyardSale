@@ -209,6 +209,8 @@ def updateTransactionItems():
     for x in inTransactionItems:
         x.withinTransaction()
 
+def contactus(request):
+    return render(request,'contactus.html')
 
 class createRequest(generic.CreateView):
     model = RequestedItems
