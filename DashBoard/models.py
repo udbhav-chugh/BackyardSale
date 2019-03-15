@@ -84,3 +84,12 @@ class Item(models.Model):
 
         return True
 
+
+
+class RequestedItems(models.Model):
+    Category = models.ForeignKey(to=Category, on_delete=models.SET_NULL, null=True)
+    SubCategory = models.ForeignKey(to=SubCategory, on_delete=models.SET_NULL, null=True)
+    ProductModel = models.CharField(max_length=250)
+    Requester = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='Requester')
+
+

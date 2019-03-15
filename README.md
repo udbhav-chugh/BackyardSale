@@ -4,6 +4,8 @@ This contains the source code for Web App BackyardSale
 Debugging:
 Nullable data entries should not be present
 
+Check if user is logged in while requesting
+
 To do list:
 1) Web Scraping for facebook group posts
 2) Rating for items

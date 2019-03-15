@@ -1,5 +1,5 @@
 from django import forms
-from DashBoard.models import NewUser
+from DashBoard.models import NewUser, RequestedItems
 from django.contrib.auth.models import User
 
 
@@ -38,3 +38,13 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = NewUser
         fields = ['Address', 'PhoneNum']
+
+
+
+class RequestItem(forms.ModelForm):
+    class Meta:
+        model = RequestedItems
+        fields=['Category','SubCategory','ProductModel']
+
+    def getRequester(self,request):
+        self.instance.Requester = request.user

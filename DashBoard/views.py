@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import ItemForm, verifyOTP
-from .models import NewUser, Item, SubCategory
+from .models import NewUser, Item, SubCategory, RequestedItems
 from BackyardSale.views import updateTransactionItems
 from django.contrib import messages
 

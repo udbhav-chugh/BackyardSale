@@ -28,6 +28,7 @@
 
 {% if SubCategories.count == 0 and Categories.count == 0 and Items.count == 0 %}
     <h4> No Results </h4>
+    <a href="{% url 'requestItem' %}">Request a new Item</a>
 {% endif %}
 
 {% endif %}

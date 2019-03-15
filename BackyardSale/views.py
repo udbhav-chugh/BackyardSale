@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render, HttpResponse,get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
-from DashBoard.models import Category, SubCategory, Item, NewUser
+from DashBoard.models import Category, SubCategory, Item, NewUser, RequestedItems
 from . import forms
 from django.utils import timezone
 from datetime import timedelta
@@ -63,7 +63,7 @@ class ItemView(generic.DetailView):
         else:
             return obj
 
-
+# Incase koi problem aaye try to add backend #
 def loginUser(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -116,11 +116,12 @@ def completeDetails(request):
     if userForm.is_valid() and userInfoForm.is_valid():
         current_user=request.user
         current_user.set_password(userForm.cleaned_data['password'])
+        login(request,current_user, backend='django.contrib.auth.backends.ModelBackend')
         current_user.save()
         userInfo = userInfoForm.save(commit=False)
         userInfo.user = current_user
         userInfo.save()
-        return redirect(to='/dashboard/')
+        return redirect(to=reverse_lazy('home'))
 
     context = {
         'userForm': userForm,
@@ -138,6 +139,7 @@ def updateuser(request):
         current_user.last_name = userForm.cleaned_data['last_name']
         current_user.email = userForm.cleaned_data['email']
         current_user.set_password(userForm.cleaned_data['password'])
+        login(request,current_user, backend='django.contrib.auth.backends.ModelBackend')
         current_user.save()
         userInfo = userInfoForm.save(commit=False)
         userInfo.user = current_user
@@ -206,3 +208,14 @@ def updateTransactionItems():
     inTransactionItems = Item.objects.filter(CurrentStatus__range=[4, 6])
     for x in inTransactionItems:
         x.withinTransaction()
+
+
+class createRequest(generic.CreateView):
+    model = RequestedItems
+    form_class = forms.RequestItem
+    template_name = 'requestItem.html'
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        form.getRequester(self.request)
+        return super(createRequest, self).form_valid()

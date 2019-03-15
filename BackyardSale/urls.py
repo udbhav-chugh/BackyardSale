@@ -35,5 +35,6 @@ urlpatterns = [
                   path('search/', views.search , name='search'),
                   path('buy/<slug:slug>/<int:pk>',views.ItemBuy,name='itemBuy'),
                   path('auth/', include('social_django.urls', namespace='social')), #social network auth
+                  path('requestItem/', views.createRequest.as_view(), name='requestItem'),
 
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
