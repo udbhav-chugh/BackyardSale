@@ -20,9 +20,6 @@ class dashboard(generic.DetailView):
     context_object_name = 'CurrentUser'
     template_name = 'DashBoard/dashboard.html'
 
-
-
-    # Slug Field no longer needed, so Removed #
     def get(self, request, *args, **kwargs):
         try:
             return super(dashboard, self).get(request,*args,**kwargs)

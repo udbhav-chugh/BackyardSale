@@ -15,13 +15,14 @@ class UserForm(forms.ModelForm):
         fields = ['username', 'email', 'password', 'first_name', 'last_name']
 
 class updateUser(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
     email = forms.EmailField(max_length=100)
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
 
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name']
+        fields = ['password','email', 'first_name', 'last_name']
 
 class PasswordForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
